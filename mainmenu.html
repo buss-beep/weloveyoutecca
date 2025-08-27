@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Main Menu</title>
+<style>
+  body, html {margin:0; padding:0; width:100%; height:100%; display:flex; justify-content:center; align-items:center; background:#000; font-family:Arial, sans-serif; overflow:hidden;}
+  .container {text-align:center; color:#fff;}
+  .bubble-text {font-size:4rem; font-weight:bold; display:inline-block; opacity:1; position:relative;}
+  .rainbow {
+    background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
+    background-size: 1400% 1400%;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-block;
+    animation: rainbowMove 6s linear infinite, bounce 1s ease infinite;
+  }
+  @keyframes rainbowMove {
+    0% {background-position:0% 50%;}
+    50% {background-position:100% 50%;}
+    100% {background-position:0% 50%;}
+  }
+  @keyframes bounce {
+    0%, 100% {transform: translateY(0);}
+    50% {transform: translateY(-5px);}
+  }
+
+  .buttons {margin-top:40px; opacity:0; transition:opacity 1s; display:flex; gap:20px; justify-content:center;}
+  .btn {
+    padding:10px 25px;
+    border-radius:12px;
+    font-size:1.2rem;
+    font-weight:bold;
+    background:#222;
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    transition:background 0.3s, color 0.5s, transform 0.2s;
+  }
+  .btn:hover {
+    background:blue;
+    color:transparent;
+    -webkit-background-clip: text;
+    animation: rainbowMove 2s linear infinite;
+    transform: translateY(-5px);
+  }
+
+  .promo {margin-top:20px; font-size:1rem;}
+  .promo .username {
+    font-weight:bold;
+    animation: rainbowMove 2s linear infinite;
+    background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
+    -webkit-background-clip:text;
+    color:transparent;
+    display:inline-block;
+    cursor:pointer;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="bubble-text">Be <span class="rainbow" id="bubble">Different</span></div>
+  <div class="buttons" id="buttons">
+    <button class="btn" id="gamesBtn">Games</button>
+    <button class="btn" id="proxyBtn">Proxy</button>
+  </div>
+  <div class="promo">Made by <span class="username" id="username">TJGoinCrazy</span> on YouTube n TikTok</div>
+</div>
+<script>
+  const bubble = document.getElementById('bubble');
+  const buttons = document.getElementById('buttons');
+  const username = document.getElementById('username');
+  const texts = ['Different', 'Unique', 'You', 'Creative', 'Bold', 'Brave', 'Fearless', 'Original', 'Innovative', 'Dynamic', 'Visionary', 'Expressive', 'Authentic'];
+  let index = 0;
+
+  function showNext(){
+    bubble.style.transition = 'all 0.4s';
+    bubble.style.transform = 'translateY(-60px)';
+    bubble.style.opacity = '0';
+
+    setTimeout(()=>{
+      bubble.textContent = texts[index];
+      bubble.style.transition = 'none';
+      bubble.style.transform = 'translateY(60px)';
+      bubble.style.opacity = '0';
+
+      setTimeout(()=>{
+        bubble.style.transition = 'all 0.4s';
+        bubble.style.transform = 'translateY(0)';
+        bubble.style.opacity = '1';
+      },50);
+
+      if(index === 2){
+        buttons.style.opacity = 1;
+      }
+
+      index = (index+1)%texts.length;
+      setTimeout(showNext, 800);
+    },400);
+  }
+
+  window.onload = showNext;
+
+  // Click actions for buttons and username
+  document.getElementById('gamesBtn').onclick = () => { window.location.href = 'games.html'; };
+  document.getElementById('proxyBtn').onclick = () => { window.location.href = 'proxy.html'; };
+  username.onclick = () => { window.location.href = 'tjgoincrazy_portfolio.html'; };
+</script>
+</body>
+</html>

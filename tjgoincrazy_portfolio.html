@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TJ Portfolio</title>
+<style>
+  body, html {
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    font-family:Arial, sans-serif;
+    color:white;
+    overflow:hidden;
+  }
+
+  body {
+    background: url('tj.gif') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  .overlay {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.5);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+  }
+
+  h1 {
+    font-size:3rem;
+    margin-bottom:10px;
+    animation: rainbowMove 2s linear infinite;
+    background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
+    -webkit-background-clip: text;
+    color: transparent;
+    display:inline-block;
+  }
+
+  @keyframes rainbowMove {
+    0% {background-position:0% 50%;}
+    50% {background-position:100% 50%;}
+    100% {background-position:0% 50%;}
+  }
+
+  .social-buttons {
+    margin:20px;
+    display:flex;
+    gap:20px;
+  }
+
+  .social-btn {
+    padding:10px 20px;
+    border-radius:12px;
+    font-size:1.2rem;
+    font-weight:bold;
+    border:none;
+    cursor:pointer;
+    background:#222;
+    color:#fff;
+    transition: all 0.3s;
+  }
+  .social-btn:hover {
+    background:blue;
+    color:transparent;
+    -webkit-background-clip: text;
+    animation: rainbowMove 2s linear infinite;
+  }
+
+  .quote {
+    font-size:1.5rem;
+    margin-bottom:20px;
+  }
+
+  .bio {
+    font-size:1.2rem;
+    max-width:600px;
+  }
+
+  audio {
+    display:none;
+  }
+</style>
+</head>
+<body>
+<div class="overlay">
+  <h1>TJGoinCrazy</h1>
+  <div class="social-buttons">
+    <button class="social-btn" onclick="window.location.href='https://www.tiktok.com/@TJGoinCrazy'">TikTok</button>
+    <button class="social-btn" onclick="window.location.href='https://www.youtube.com/@TJGoinCrazy'">YouTube</button>
+  </div>
+  <div class="quote">“You know its cold outside when you go outside and its cold”</div>
+  <div class="bio">I make websites, trying to get into games later, and like music. I have FL Studio.</div>
+</div>
+<audio id="bgAudio" autoplay loop></audio>
+<script>
+  const songs = ['pf.mp3', 'afd.mp3', 'ms.mp3', 'rehab.mp3', 'drm.mp3', 'll.mp3', 'r.mp3', '3x.mp3'];
+  const audio = document.getElementById('bgAudio');
+  const randomSong = songs[Math.floor(Math.random() * songs.length)];
+  audio.src = randomSong;
+  audio.volume = 1;
+  audio.play();
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hidden Essay Link</title>
+  <style>
+    body{margin:0; font-family:Georgia,serif; background:#fafafa; color:#111; line-height:1.65}
+    .container{max-width:900px; margin:auto; padding:32px 20px}
+    h1{margin-bottom:20px}
+    article{background:#fff; padding:28px; border-radius:12px; border:1px solid #e5e5e5}
+    p,blockquote{margin:0 0 1em; text-align:justify}
+    .num::before{
+      counter-increment: par; 
+      content: counter(par) ". "; 
+      font-weight:bold; 
+      margin-right:6px; 
+      color:#555;
+    }
+    article{counter-reset: par}
+    /* secret link styling — looks like plain text */
+    a.secret{
+      color:inherit; 
+      text-decoration:none; 
+      cursor:text; 
+      pointer-events:auto;
+    }
+    a.secret:hover, a.secret:focus{
+      color:inherit; 
+      text-decoration:none; 
+      cursor:text; 
+      outline:none;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>A Very Long Essay</h1>
+    <article id="essay">
+      <!-- Starting seed paragraphs -->
+      <p class="num">This is the first paragraph of the essay, serving as an introduction to the larger discourse. It uses academic style, layered vocabulary, and extended syntax to mimic a college-level essay while expanding substantially in word count through elaboration and reiteration of points, thus generating mass.</p>
+      <p class="num">Cities are laboratories of human interaction, where infrastructure and culture intertwine, creating cycles of governance, technology, and lived experience. By drawing from multiple disciplines—sociology, political science, and cultural studies—the essay expands, layering idea upon idea until the very length itself becomes part of the experiment.</p>
+      <p class="num">Technology has always shaped how societies interpret mobility, governance, and belonging. Historical examples provide evidence: the telegraph accelerated markets, the radio shaped national imagination, and the internet reframed everything from commerce to identity. Each elaboration adds density, extending the essay toward immense proportions.</p>
+    </article>
+  </main>
+
+  <script>
+    (function(){
+      const TARGET_PARAGRAPHS = 200; // generate 200 paragraphs for super long essay
+      const essay = document.getElementById('essay');
+      const baseParas = Array.from(essay.querySelectorAll('p'));
+
+      // duplicate base paragraphs until we reach 200
+      let count = baseParas.length;
+      let i = 0;
+      while(count < TARGET_PARAGRAPHS){
+        const clone = baseParas[i % baseParas.length].cloneNode(true);
+        essay.appendChild(clone);
+        count++;
+        i++;
+      }
+
+      // insert the hidden link in paragraph 41
+      const para41 = essay.querySelectorAll('p')[40]; // zero-based
+      const words = para41.textContent.trim().split(" ");
+      const insertIndex = Math.floor(words.length/2);
+      const secretWord = document.createElement("a");
+      secretWord.className = "secret";
+      secretWord.href = "first password.html"; // change to your hidden site
+      secretWord.textContent = words[insertIndex];
+      words[insertIndex] = secretWord.outerHTML;
+      para41.innerHTML = words.join(" ");
+
+      // For debugging, log the secret word in console
+      console.log("Secret word is:", secretWord.textContent);
+    })();
+  </script>
+</body>
+</html>
