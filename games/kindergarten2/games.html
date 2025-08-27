@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heaven & Darkness Games</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      color: #000;
+      overflow-x: hidden;
+      background: #000;
+    }/* Search bar */
+header {
+  background: #111;
+  padding: 1rem;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#searchBar {
+  width: 50%;
+  max-width: 400px;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+#backButton {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #444;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+  transition: background 0.3s;
+}
+
+#backButton:hover {
+  background: #666;
+}
+
+/* Intro overlay */
+#intro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 60%, rgba(0,0,0,1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9999;
+  animation: fadeOutOverlay 6s forwards;
+  animation-delay: 6s;
+}
+
+#intro h1 {
+  font-size: 3rem;
+  color: #000;
+  text-shadow: 0 0 10px #fff;
+  opacity: 0;
+  position: absolute;
+  animation: fadeInOut 3s ease-in-out forwards;
+}
+
+#intro h1:nth-child(1) { animation-delay: 0s; }
+#intro h1:nth-child(2) { animation-delay: 3s; }
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes fadeOutOverlay {
+  to { opacity: 0; visibility: hidden; }
+}
+
+/* Section styles */
+section {
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#heaven {
+  background: linear-gradient(to bottom, #e6f7ff, #cce7ff);
+  color: #000;
+}
+
+#middle {
+  background: linear-gradient(to bottom, #cce7ff, #999, #333, #111);
+  color: #fff;
+}
+
+#darkness {
+  background: linear-gradient(to bottom, #111, #000);
+  color: #f5f5f5;
+  position: relative;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  z-index: 2;
+  position: relative;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: auto;
+  z-index: 2;
+  position: relative;
+}
+
+.game-card {
+  background: rgba(0,0,0,0.4);
+  border: 2px solid #fff;
+  border-radius: 15px;
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.game-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 25px rgba(255,255,255,0.6);
+}
+
+.game-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  border: 2px solid #fff;
+}
+
+.game-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.9rem;
+  color: #ddd;
+  background: #000;
+  border-top: 2px solid #fff;
+}
+
+/* Heaven clouds */
+.cloud {
+  position: absolute;
+  top: 20%;
+  background: rgba(255,255,255,0.8);
+  border-radius: 50%;
+  box-shadow: -60px 30px 80px rgba(255,255,255,0.8),
+              60px 30px 80px rgba(255,255,255,0.8);
+  animation: drift linear infinite;
+  z-index: 1;
+}
+
+@keyframes drift {
+  from { transform: translateX(-200px); }
+  to { transform: translateX(200vw); }
+}
+
+/* Darkness glowing eyes */
+.eyes {
+  position: absolute;
+  width: 40px;
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+  opacity: 0;
+  animation: blink 6s infinite;
+  transition: transform 0.2s ease-out;
+}
+
+.eyes::before, .eyes::after {
+  content: '';
+  width: 15px;
+  height: 15px;
+  background: red;
+  border-radius: 50%;
+  box-shadow: 0 0 10px red, 0 0 20px red;
+}
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+
+  </style>
+</head>
+<body>  <header>
+    <button id="backButton" onclick="goBack()">Back</button>
+    <input type="text" id="searchBar" placeholder="Search games...">
+  </header>  <!-- Intro Overlay -->  <div id="intro">
+    <h1>Welcome to Heaven</h1>
+    <h1>I hope you enjoy your stay!</h1>
+  </div>  <!-- Heaven Section -->  <section id="heaven">
+    <h2>☁️ Heaven — Peaceful Games</h2>
+    <div class="game-grid">
+      <div class="game-card" onclick="launchGame('games/peaceful1/')">
+        <img src="games/peaceful1/art.png" alt="Peaceful Game 1">
+        <div class="game-title">Peaceful Game 1</div>
+      </div>
+      <div class="game-card" onclick="launchGame('games/peaceful2/')">
+        <img src="games/peaceful2/art.png" alt="Peaceful Game 2">
+        <div class="game-title">Peaceful Game 2</div>
+      </div>
+    </div>
+  </section>  <!-- Middle Section -->  <section id="middle">
+    <h2>⚔️ The Middle — Shooter Games</h2>
+    <div class="game-grid">
+      <div class="game-card" onclick="launchGame('games/shooter1/')">
+        <img src="games/shooter1/art.png" alt="Shooter Game 1">
+        <div class="game-title">Shooter Game 1</div>
+      </div>
+      <div class="game-card" onclick="launchGame('games/shooter2/')">
+        <img src="games/shooter2/art.png" alt="Shooter Game 2">
+        <div class="game-title">Shooter Game 2</div>
+      </div>
+    </div>
+  </section>  <!-- Darkness Section -->  <section id="darkness">
+    <h2>🌑 Darkness — Horror Games</h2>
+    <div class="game-grid">
+      <div class="game-card" onclick="launchGame('games/horror1/')">
+        <img src="games/horror1/art.png" alt="Horror Game 1">
+        <div class="game-title">Horror Game 1</div>
+      </div>
+      <div class="game-card" onclick="launchGame('games/horror2/')">
+        <img src="games/horror2/art.png" alt="Horror Game 2">
+        <div class="game-title">Horror Game 2</div>
+      </div>
+    </div>
+  </section>  <footer>
+    © 2025 Heaven & Darkness. All Rights Reserved.
+  </footer>  <script>
+    function launchGame(dir) {
+      window.location.href = dir + 'index.html'; // opens game in same tab
+    }
+
+    function goBack() {
+      window.location.href = 'mainmenu.html'; // back button goes to main menu
+    }
+
+    // Search filter
+    const searchBar = document.getElementById("searchBar");
+    searchBar.addEventListener("input", function() {
+      const query = this.value.toLowerCase();
+      document.querySelectorAll(".game-card").forEach(card => {
+        const title = card.querySelector(".game-title").innerText.toLowerCase();
+        card.style.display = title.includes(query) ? "block" : "none";
+      });
+    });
+
+    // Spawn clouds based on Heaven games
+    const heaven = document.getElementById("heaven");
+    const heavenGames = heaven.querySelectorAll(".game-card").length;
+    for (let i = 0; i < heavenGames; i++) {
+      const cloud = document.createElement("div");
+      cloud.classList.add("cloud");
+      cloud.style.width = (100 + Math.random()*200) + "px";
+      cloud.style.height = (60 + Math.random()*100) + "px";
+      cloud.style.top = (10 + Math.random()*50) + "%";
+      cloud.style.left = (-300 - Math.random()*500) + "px";
+      cloud.style.animationDuration = (60 + Math.random()*60) + "s";
+      heaven.appendChild(cloud);
+    }
+
+    // Spawn eyes based on Darkness games
+    const darkness = document.getElementById("darkness");
+    const darkGames = darkness.querySelectorAll(".game-card").length;
+    const eyesArray = [];
+    for (let i = 0; i < darkGames; i++) {
+      const eyes = document.createElement("div");
+      eyes.classList.add("eyes");
+      eyes.style.left = (10 + Math.random()*80) + "%";
+      eyes.style.top = (20 + Math.random()*60) + "%";
+      eyes.style.animationDelay = (Math.random()*6) + "s";
+      darkness.appendChild(eyes);
+      eyesArray.push(eyes);
+    }
+
+    // Eyes follow mouse
+    document.addEventListener("mousemove", (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      eyesArray.forEach(eye => {
+        eye.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    });
+  </script></body>
+</html>
