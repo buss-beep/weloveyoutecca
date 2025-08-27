@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Frame Example</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  #gameOverlay {
+    width: 800px;
+    height: 600px;
+    border: 4px solid #fff;
+    display: flex;
+    flex-direction: column;
+    background: #222;
+  }
+
+  #gameFrame {
+    flex: 1;
+    width: 100%;
+    border: none;
+  }
+
+  #gameControls {
+    background: #333;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  #gameControls button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #555;
+    color: #fff;
+  }
+
+  #gameControls button:hover {
+    background: #777;
+  }
+</style>
+</head>
+<body>
+
+<div id="gameOverlay">
+  <iframe id="gameFrame" src="game.html"></iframe>
+  <div id="gameControls">
+    <button onclick="exitGame()">Exit</button>
+    <button onclick="toggleFullscreen()">Fullscreen</button>
+    <button id="panicButton" onclick="panic()">PANIC</button>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById('gameOverlay');
+  const frame = document.getElementById('gameFrame');
+  const panicBtn = document.getElementById('panicButton');
+
+  function exitGame() {
+    frame.src = 'game.html'; // reset to game.html in same folder
+  }
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      overlay.requestFullscreen();
+      panicBtn.style.display = 'none';
+    } else {
+      document.exitFullscreen();
+      panicBtn.style.display = 'block';
+    }
+  }
+
+  function panic() {
+    window.open('about:blank', '_blank');
+  }
+
+  document.addEventListener('fullscreenchange', () => {
+    panicBtn.style.display = document.fullscreenElement ? 'none' : 'block';
+  });
+</script>
+
+</body>
+</html>
