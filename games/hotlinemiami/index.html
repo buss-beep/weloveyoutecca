@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Frame Example</title>
+<title>Game Frame</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -16,6 +16,7 @@
     margin: 0;
   }
 
+  /* Game Overlay Box */
   #gameOverlay {
     width: 800px;
     height: 600px;
@@ -23,14 +24,17 @@
     display: flex;
     flex-direction: column;
     background: #222;
+    box-shadow: 0 0 20px rgba(255,255,255,0.3);
   }
 
+  /* Game Frame */
   #gameFrame {
     flex: 1;
     width: 100%;
     border: none;
   }
 
+  /* Controls */
   #gameControls {
     background: #333;
     display: flex;
@@ -39,24 +43,37 @@
   }
 
   #gameControls button {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.2rem;
     font-size: 1rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     background: #555;
     color: #fff;
+    transition: background 0.2s;
   }
 
   #gameControls button:hover {
     background: #777;
+  }
+
+  /* Panic button special styling */
+  #panicButton {
+    background: crimson;
+    font-weight: bold;
+  }
+  #panicButton:hover {
+    background: red;
   }
 </style>
 </head>
 <body>
 
 <div id="gameOverlay">
+  <!-- Game loads here -->
   <iframe id="gameFrame" src="game.html"></iframe>
+
+  <!-- Control Buttons -->
   <div id="gameControls">
     <button onclick="exitGame()">Exit</button>
     <button onclick="toggleFullscreen()">Fullscreen</button>
@@ -66,13 +83,15 @@
 
 <script>
   const overlay = document.getElementById('gameOverlay');
-  const frame = document.getElementById('gameFrame');
   const panicBtn = document.getElementById('panicButton');
 
+  // Exit: always go back to games.html at root
   function exitGame() {
-    frame.src = 'game.html'; // reset to game.html in same folder
+    const base = window.location.origin + window.location.pathname.split('/')[1];
+    window.location.href = base + "/games.html";
   }
 
+  // Fullscreen toggle
   function toggleFullscreen() {
     if (!document.fullscreenElement) {
       overlay.requestFullscreen();
@@ -83,10 +102,12 @@
     }
   }
 
+  // Panic: instantly open a blank tab
   function panic() {
     window.open('about:blank', '_blank');
   }
 
+  // Auto-toggle Panic button visibility on fullscreen change
   document.addEventListener('fullscreenchange', () => {
     panicBtn.style.display = document.fullscreenElement ? 'none' : 'block';
   });
